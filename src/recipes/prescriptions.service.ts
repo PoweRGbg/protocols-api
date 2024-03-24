@@ -35,10 +35,15 @@ export class PrescriptionsService {
     }
 
     fulfillPrescription(id: number, fulfilledDate: Date): Prescription | undefined {
-        const Prescription = this.getPrescriptionById(id);
-        if (Prescription) {
-            Prescription.fulfilledDate = fulfilledDate;
-            return Prescription;
+        const prescription = this.prescriptions.find((prescription) => prescription.id === id);
+        
+        if (prescription) {
+            const index = this.prescriptions.indexOf(prescription);
+            prescription.fulfilledDate = fulfilledDate;
+            this.prescriptions[index] = {...prescription};
+            this.writeToFile();
+            console.log('Prescription fulfilled:', prescription);
+            return prescription;
         }
     }
 
@@ -53,6 +58,11 @@ export class PrescriptionsService {
             this.prescriptions = JSON.parse(data);
         } catch (error) {
             console.error('Error reading from file :', error);
+            if (error.code === 'ENOENT') {
+                this.writeToFile();
+            } else {
+                console.error('Error reading from file :', error);
+            }
         }
     }
 

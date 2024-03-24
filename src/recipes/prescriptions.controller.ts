@@ -21,9 +21,9 @@ export class PrescriptionsController {
 		return this.prescriptionsService.getPrescriptionById(id);
 	}
 
-	@Put(':id/status')
+	@Put(':id')
 	updatePrescriptionStatus(@Param('id') id: number, @Body('status') fulfilled: Date): Prescription {
-		return this.prescriptionsService.fulfillPrescription(id, fulfilled);
+		return this.prescriptionsService.fulfillPrescription(Number(id), fulfilled);
 	}
 
 	@Delete(':id')
