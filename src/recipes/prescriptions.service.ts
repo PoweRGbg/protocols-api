@@ -13,10 +13,11 @@ export class PrescriptionsService {
         this.readFromFile();
     }
 
-    create(medicineName: string, validTo: Date, issued?: Date): Prescription {
+    create(medicineName: string, validTo: Date, user: string, issued?: Date): Prescription {
         const id = this.prescriptions.length + 1;
         const prescription: Prescription = {
             id,
+            user,
             medicineName,
             validTo,
             issued

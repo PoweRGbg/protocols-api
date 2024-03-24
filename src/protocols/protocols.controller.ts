@@ -7,8 +7,8 @@ export class ProtocolsController {
 	constructor(private protocolsService: ProtocolsService) { }
 
 	@Post()
-	createProtocol(@Body() createProtocolDto: { medicines: string[]; validTo: Date }): Protocol {
-		return this.protocolsService.create(createProtocolDto.medicines, createProtocolDto.validTo);
+	createProtocol(@Body() createProtocolDto: { medicines: string[]; validTo: Date; user: string }): Protocol {
+		return this.protocolsService.create(createProtocolDto.medicines, createProtocolDto.validTo, createProtocolDto.user);
 	}
 
 	@Get()

@@ -7,8 +7,8 @@ export class PrescriptionsController {
 	constructor(private prescriptionsService: PrescriptionsService) { }
 
 	@Post()
-	createPrescription(@Body() createPrescriptionDto: { medicineName: string; validTo: Date }): Prescription {
-		return this.prescriptionsService.create(createPrescriptionDto.medicineName, createPrescriptionDto.validTo);
+	createPrescription(@Body() createPrescriptionDto: { medicineName: string; validTo: Date, user: string }): Prescription {
+		return this.prescriptionsService.create(createPrescriptionDto.medicineName, createPrescriptionDto.validTo, createPrescriptionDto.user);
 	}
 
 	@Get()
