@@ -8,7 +8,7 @@ export class RedisService {
     constructor(
         @Inject(IORedisKey)
         private readonly redisClient: Redis,
-    ) { }
+    ) {}
 
     async getKeys(pattern?: string): Promise<string[]> {
         return await this.redisClient.keys(pattern);
