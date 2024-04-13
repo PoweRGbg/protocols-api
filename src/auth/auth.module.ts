@@ -6,6 +6,7 @@ import { AuthController } from './auth.controller';
 import { BcryptService } from './bcrypt.service';
 import jwtConfig from '../common/config/jwt.config';
 import { Repository } from 'typeorm';
+import { UsersService } from './users.service';
 
 @Module({
     imports: [
@@ -14,7 +15,13 @@ import { Repository } from 'typeorm';
         Repository,
     ],
     controllers: [AuthController],
-    providers: [AuthService, BcryptService, JwtService, Repository],
+    providers: [
+        AuthService,
+        BcryptService,
+        JwtService,
+        Repository,
+        UsersService,
+    ],
     exports: [JwtModule],
 })
-export class AuthModule {}
+export class AuthModule { }

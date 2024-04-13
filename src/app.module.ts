@@ -12,6 +12,7 @@ import { BcryptService } from './auth/bcrypt.service';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import redisConfig from './common/config/redis.config';
+import { UsersService } from './auth/users.service';
 
 @Module({
     imports: [
@@ -29,6 +30,7 @@ import redisConfig from './common/config/redis.config';
         BcryptService,
         JwtService,
         Repository,
+        UsersService,
     ],
 })
 export class AppModule {}

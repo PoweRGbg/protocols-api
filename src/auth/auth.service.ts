@@ -3,19 +3,18 @@ import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 // import { InjectRepository } from '@nestjs/typeorm';
 import { randomUUID } from 'crypto';
-import { Repository } from 'typeorm';
 
 import jwtConfig from '../common/config/jwt.config';
 import { ActiveUserData } from '../common/interfaces/active-user-data.interface';
-// import { RedisService } from '../redis/redis.service';
-// import { User } from '../users/entities/user.entity';
 import { BcryptService } from './bcrypt.service';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
+import { UsersService } from './users.service';
 
 export interface User {
     id: string;
     email: string;
+    name: string;
     password: string;
 }
 
@@ -27,20 +26,22 @@ export class AuthService {
         private readonly bcryptService: BcryptService,
         private readonly jwtService: JwtService,
         // @InjectRepository(User)
-        private readonly userRepository: Repository<User>,
+        private readonly userService: UsersService,
         // private readonly redisService: RedisService,
-    ) {}
+    ) { }
 
     async signUp(signUpDto: SignUpDto): Promise<void> {
-        const { email, password } = signUpDto;
+        const { email, name, password } = signUpDto;
 
         try {
             const user: User = {
                 id: randomUUID(),
                 email,
+                name,
                 password: await this.bcryptService.hash(password),
             };
-            await this.userRepository.save(user);
+            this.userService.create(user);
+            return;
         } catch (error) {
             // Check if the error is a duplicate entry error
             throw error;
@@ -49,13 +50,15 @@ export class AuthService {
 
     async signIn(signInDto: SignInDto): Promise<{ accessToken: string }> {
         const { email, password } = signInDto;
+        console.log('signIn', email, password);
 
-        const user = await this.userRepository.findOne({
+        const user = await this.userService.findOne({
             where: {
                 email,
             },
         });
         if (!user) {
+            console.log('Invalid email', email);
             throw new BadRequestException('Invalid email');
         }
 
@@ -64,9 +67,10 @@ export class AuthService {
             user.password,
         );
         if (!isPasswordMatch) {
+            console.log('Invalid password', password);
             throw new BadRequestException('Invalid password');
         }
-
+        console.log('generating token', user.id);
         return await this.generateAccessToken(user);
     }
 
@@ -79,7 +83,6 @@ export class AuthService {
         user: Partial<User>,
     ): Promise<{ accessToken: string }> {
         const tokenId = randomUUID();
-
         // await this.redisService.insert(`user-${user.id}`, tokenId);
         console.log('generateAccessToken for user', user.id);
         const accessToken = await this.jwtService.signAsync(
@@ -89,8 +92,8 @@ export class AuthService {
                 tokenId,
             } as ActiveUserData,
             {
-                secret: this.jwtConfiguration.secret,
-                expiresIn: this.jwtConfiguration.accessTokenTtl,
+                secret: 'somethingSecret',
+                expiresIn: 300,
             },
         );
 
