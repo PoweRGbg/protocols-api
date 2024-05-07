@@ -50,7 +50,6 @@ export class AuthService {
 
     async signIn(signInDto: SignInDto): Promise<{ accessToken: string }> {
         const { email, password } = signInDto;
-        console.log('signIn', email, password);
 
         const user = await this.userService.findOne({
             where: {
@@ -93,7 +92,7 @@ export class AuthService {
             } as ActiveUserData,
             {
                 secret: 'somethingSecret',
-                expiresIn: 300,
+                expiresIn: 600,
             },
         );
 
