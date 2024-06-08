@@ -13,6 +13,8 @@ import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import redisConfig from './common/config/redis.config';
 import { UsersService } from './auth/users.service';
+import { ClientsController } from './clients/clients.controller';
+import { ClientsService } from './clients/clients.service';
 
 @Module({
     imports: [
@@ -22,10 +24,16 @@ import { UsersService } from './auth/users.service';
             validate,
         }),
     ],
-    controllers: [PrescriptionsController, ProtocolsController, AuthController],
+    controllers: [
+        PrescriptionsController,
+        ProtocolsController,
+        AuthController,
+        ClientsController,
+    ],
     providers: [
         PrescriptionsService,
         ProtocolsService,
+        ClientsService,
         AuthService,
         BcryptService,
         JwtService,

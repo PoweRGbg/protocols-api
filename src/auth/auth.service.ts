@@ -92,7 +92,7 @@ export class AuthService {
             } as ActiveUserData,
             {
                 secret: 'somethingSecret',
-                expiresIn: 600,
+                expiresIn: 1800,
             },
         );
 
