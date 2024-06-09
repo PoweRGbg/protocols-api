@@ -14,7 +14,8 @@ export interface Policy {
     vehicleId: string;
     policyName: string;
     policyNumber: string;
-    policyBroker: string;
+    broker: string;
+    company: string;
     amount: number;
     validTo: Date;
     medicines?: string;

@@ -65,7 +65,6 @@ export class ClientsController {
             user: string;
         },
     ): Client {
-        console.log('updateClientDto', createClientDto);
         return this.clientService.updateClient(
             createClientDto,
             createClientDto.user,
