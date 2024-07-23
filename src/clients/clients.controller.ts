@@ -26,7 +26,6 @@ export class ClientsController {
             user: string;
         },
     ): Client {
-        console.log('createClientDto', createClientDto);
         return this.clientService.create(
             {
                 id: createClientDto.id,

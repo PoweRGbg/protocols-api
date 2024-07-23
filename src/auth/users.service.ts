@@ -15,8 +15,6 @@ export class UsersService {
 
     create(user: User): User {
         // this.readFromFile();
-        console.log('users before push:', this.users.length);
-        
         this.users.push(user);
         this.writeToFile();
         return user;
