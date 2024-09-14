@@ -18,7 +18,7 @@ export class ClientsService {
         const idMap = new Map<number, Client>();
         let maxId = 0;
 
-        this.clients.forEach(client => {
+        this.clients.forEach((client) => {
             maxId = Math.max(maxId, client.id);
             if (idMap.has(client.id)) {
                 // Duplicate ID found, assign a new ID
@@ -29,6 +29,8 @@ export class ClientsService {
 
         // Update the clients array with the de-duplicated clients
         this.clients = Array.from(idMap.values());
+        console.log('clients now', this.clients);
+
         // Write the updated clients to file
         this.writeToFile();
     }
