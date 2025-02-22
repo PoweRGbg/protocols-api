@@ -24,4 +24,4 @@ import { UsersService } from './users.service';
     ],
     exports: [JwtModule],
 })
-export class AuthModule { }
+export class AuthModule {}

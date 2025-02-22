@@ -3,7 +3,7 @@ import { ProtocolsService } from './protocols.service';
 import { ProtocolsController } from './protocols.controller';
 
 @Module({
-  providers: [ProtocolsService],
-  controllers: [ProtocolsController]
+    providers: [ProtocolsService],
+    controllers: [ProtocolsController],
 })
 export class RecipesModule {}

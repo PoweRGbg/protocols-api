@@ -28,7 +28,7 @@ export class AuthService {
         // @InjectRepository(User)
         private readonly userService: UsersService,
         // private readonly redisService: RedisService,
-    ) { }
+    ) {}
 
     async signUp(signUpDto: SignUpDto): Promise<void> {
         const { email, name, password } = signUpDto;

@@ -7,7 +7,7 @@ export class UsersService {
     private users: User[] = [];
     private readonly filePath = 'users.json';
 
-    constructor() { }
+    constructor() {}
 
     onModuleInit() {
         this.readFromFile();
