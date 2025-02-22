@@ -29,7 +29,6 @@ export class ClientsService {
 
         // Update the clients array with the de-duplicated clients
         this.clients = Array.from(idMap.values());
-        console.log('clients now', this.clients);
 
         // Write the updated clients to file
         this.writeToFile();
@@ -41,23 +40,20 @@ export class ClientsService {
             0,
         );
         const id = maxId + 1;
-        const newClient = { id, ...client, user };
-        console.log('client', client);
-        console.log('newClient', newClient);
+        const newClient = { id, ...client, user, created: new Date() };
         this.clients.push(newClient);
         this.writeToFile();
         return newClient;
     }
 
     updateClient(client: Client, user: string): Client {
-        console.log('client to update', client);
         const clientExists = this.clients.find(
             (clientInDb) => clientInDb.id === client.id,
         );
         if (!clientExists) {
             throw new Error('Client not found - update failed');
         }
-        const updatedClient = { ...client, user };
+        const updatedClient = { ...client, user, updated: new Date() };
         this.clients = this.clients.map((clientInDb) =>
             clientInDb.id === client.id ? updatedClient : clientInDb,
         );
@@ -71,7 +67,6 @@ export class ClientsService {
 
     getClientById(id: number): Client | undefined {
         const result = this.clients.find((client) => client.id === id);
-        console.log('client', result);
         return result;
     }
 

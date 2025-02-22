@@ -11,6 +11,7 @@ export interface Client {
 
 export interface Policy {
     id: number;
+    type?: string;
     vehicleId: string;
     policyName: string;
     policyNumber: string;
@@ -18,8 +19,9 @@ export interface Policy {
     company: string;
     amount: number;
     validTo: Date;
-    medicines?: string;
     payments?: Payment[];
+    created?: Date;
+    updated?: Date;
 }
 
 export interface Payment {
